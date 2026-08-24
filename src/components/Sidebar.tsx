@@ -34,7 +34,7 @@ export default function Sidebar() {
       <aside className="sidebar">
         <div className="sidebar-brand">
           <div className="sidebar-brand-icon">
-            <Image src="/calcicore.png" alt="Calicore" width={34} height={34} style={{ objectFit: 'contain' }} />
+            <Image src="/calicore.png" alt="Calicore" width={34} height={34} style={{ objectFit: 'contain' }} />
           </div>
           <span className="sidebar-brand-name">Calicore</span>
         </div>

@@ -57,7 +57,7 @@ export default function LoginPage() {
         {/* Top Overlapping Logo Emblem */}
         <div className="catrider-mascot-circle">
           <div className="inner-icon-ring">
-            <Image src="/calcicore.png" alt="Calicore Logo" width={88} height={88} className="mascot-img" priority />
+            <Image src="/calicore.png" alt="Calicore Logo" width={88} height={88} className="mascot-img" priority />
           </div>
         </div>
 

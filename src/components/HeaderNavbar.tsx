@@ -65,7 +65,7 @@ export default function HeaderNavbar() {
         <Link href="/dashboard" className="brand-logo-group">
           <div className="brand-logo-wrapper">
             <Image
-              src="/calcicore.png"
+              src="/calicore.png"
               alt="Calicore"
               width={38}
               height={38}

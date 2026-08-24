@@ -344,7 +344,7 @@ export default function AdminPage() {
         {/* Brand Logo Header */}
         <div className="sidebar-brand-header">
           <div className="sidebar-logo-emblem">
-            <Image src="/calcicore.png" alt="Calicore" width={36} height={36} priority />
+            <Image src="/calicore.png" alt="Calicore" width={36} height={36} priority />
           </div>
           <div>
             <div className="sidebar-brand-name">Calicore</div>

@@ -34,7 +34,7 @@ export default function SplashScreen() {
           <div className="splash-spinner-ring" />
           <div className="splash-logo-circle">
             <Image
-              src="/calcicore.png"
+              src="/calicore.png"
               alt="Calicore Logo"
               width={72}
               height={72}
