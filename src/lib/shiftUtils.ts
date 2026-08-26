@@ -4,20 +4,20 @@
  * Business logic and time window rules for First Shift (Morning) & Second Shift (Evening).
  *
  * Timings:
- *  - First Shift (Morning): 6:00 AM to 10:00 AM
- *    • Clock-in opens at 5:55 AM
- *    • On-time window: 5:55 AM – 6:25 AM -> PRESENT
- *    • Half-day window: 6:26 AM – 6:59 AM -> HALF_DAY
- *    • After 7:00 AM -> ABSENT (Clock-in locked)
- *    • Clock-out opens at 9:55 AM
- *    • No clock-in by 10:30 AM -> Manager Approval Request
+ *  - First Shift (Morning): 7:00 AM to 10:30 AM
+ *    • Clock-in opens at 6:55 AM
+ *    • On-time window: 6:55 AM – 7:15 AM -> PRESENT
+ *    • Half-day window: 7:16 AM – 7:59 AM -> HALF_DAY
+ *    • After 8:00 AM -> ABSENT (Clock-in locked)
+ *    • Clock-out opens at 10:25 AM
+ *    • No clock-in by 11:00 AM -> Manager Approval Request
  *
  *  - Second Shift (Evening): 4:00 PM to 9:00 PM (16:00 – 21:00)
  *    • Clock-in opens at 3:55 PM (15:55)
  *    • On-time window: 3:55 PM – 4:18 PM (15:55 – 16:18) -> PRESENT
  *    • Half-day window: 4:19 PM – 4:59 PM (16:19 – 16:59) -> HALF_DAY
  *    • After 5:00 PM (17:00) -> ABSENT (Clock-in locked)
- *    • Clock-out opens at 8:55 PM (20:55)
+ *    • Clock-out opens at 8:30 PM (20:30)
  *    • No clock-in by 9:30 PM (21:30) -> Manager Approval Request
  */
 
@@ -45,17 +45,17 @@ export const SHIFT_CONFIGS: Record<ShiftType, ShiftConfig> = {
   FIRST_SHIFT: {
     type: 'FIRST_SHIFT',
     name: 'Morning Shift',
-    shiftHoursLabel: '6:00 AM – 10:00 AM',
-    clockInOpenLabel: '5:55 AM',
-    onTimeCutoffLabel: '6:25 AM',
-    absentCutoffLabel: '7:00 AM',
-    clockOutOpenLabel: '9:55 AM',
-    approvalTriggerLabel: '10:30 AM',
-    clockInOpenMin: 5 * 60 + 55,       // 355 mins (5:55 AM)
-    onTimeCutoffMin: 6 * 60 + 25,      // 385 mins (6:25 AM)
-    absentCutoffMin: 7 * 60,           // 420 mins (7:00 AM)
-    clockOutOpenMin: 9 * 60 + 55,      // 595 mins (9:55 AM)
-    approvalTriggerMin: 10 * 60 + 30,  // 630 mins (10:30 AM)
+    shiftHoursLabel: '7:00 AM – 10:30 AM',
+    clockInOpenLabel: '6:55 AM',
+    onTimeCutoffLabel: '7:15 AM',
+    absentCutoffLabel: '8:00 AM',
+    clockOutOpenLabel: '10:25 AM',
+    approvalTriggerLabel: '11:00 AM',
+    clockInOpenMin: 6 * 60 + 55,       // 415 mins (6:55 AM)
+    onTimeCutoffMin: 7 * 60 + 15,      // 435 mins (7:15 AM)
+    absentCutoffMin: 8 * 60,           // 480 mins (8:00 AM)
+    clockOutOpenMin: 10 * 60 + 25,     // 625 mins (10:25 AM)
+    approvalTriggerMin: 11 * 60,       // 660 mins (11:00 AM)
   },
   SECOND_SHIFT: {
     type: 'SECOND_SHIFT',
@@ -64,12 +64,12 @@ export const SHIFT_CONFIGS: Record<ShiftType, ShiftConfig> = {
     clockInOpenLabel: '3:55 PM',
     onTimeCutoffLabel: '4:18 PM',
     absentCutoffLabel: '5:00 PM',
-    clockOutOpenLabel: '8:55 PM',
+    clockOutOpenLabel: '8:30 PM',
     approvalTriggerLabel: '9:30 PM',
     clockInOpenMin: 15 * 60 + 55,      // 955 mins (3:55 PM)
     onTimeCutoffMin: 16 * 60 + 18,     // 978 mins (4:18 PM)
     absentCutoffMin: 17 * 60,          // 1020 mins (5:00 PM)
-    clockOutOpenMin: 20 * 60 + 55,     // 1255 mins (8:55 PM)
+    clockOutOpenMin: 20 * 60 + 30,     // 1230 mins (8:30 PM)
     approvalTriggerMin: 21 * 60 + 30,  // 1290 mins (9:30 PM)
   },
 };

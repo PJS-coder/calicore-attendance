@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Rule 2: Missed Clock-Out Manager Approval Trigger
-    // Triggered when user HAS clocked in, but DOES NOT clock out by cutoff (10:30 AM for Shift 1, 9:30 PM for Shift 2)
+    // Triggered when user HAS clocked in, but DOES NOT clock out by cutoff (11:00 AM for Shift 1, 9:30 PM for Shift 2)
     const isClockedInNoOut = !!(attendance?.clockIn && !attendance?.clockOut);
     const approvalNeeded = isApprovalTriggered(now, activeShift);
 

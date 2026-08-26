@@ -792,7 +792,7 @@ export default function AdminPage() {
                           <td>
                             <div style={{ fontSize: 13, fontWeight: 700, color: '#1E293B', display: 'flex', alignItems: 'center', gap: 6 }}>
                               <span>{reqItem.shift === 'SECOND_SHIFT' ? '🌆' : '🌅'}</span>
-                              <span>{reqItem.shift === 'SECOND_SHIFT' ? 'Evening Shift (4:00 PM – 9:00 PM)' : 'Morning Shift (6:00 AM – 10:00 AM)'}</span>
+                              <span>{reqItem.shift === 'SECOND_SHIFT' ? 'Evening Shift (4:00 PM – 9:00 PM)' : 'Morning Shift (7:00 AM – 10:30 AM)'}</span>
                             </div>
                           </td>
                           <td style={{ maxWidth: 260 }}>
