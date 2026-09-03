@@ -1,9 +1,8 @@
-// Calicore — Service Worker
-const CACHE_NAME = 'calicore-v1';
+// Calicore — Service Worker (v2)
+const CACHE_NAME = 'calicore-v2';
 
-// Assets to cache on install
+// Only cache static icons & manifest, never cache dynamic HTML pages
 const STATIC_ASSETS = [
-  '/',
   '/manifest.json',
   '/calcicore.png',
   '/apple-icon.png',
@@ -28,18 +27,24 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Only handle GET requests
   if (event.request.method !== 'GET') return;
 
-  // Skip API routes and Next.js internals
   const url = new URL(event.request.url);
-  if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/_next/')) return;
 
+  // Never cache API routes, Next.js internal chunks, or navigation requests
+  if (
+    url.pathname.startsWith('/api/') ||
+    url.pathname.startsWith('/_next/') ||
+    event.request.mode === 'navigate'
+  ) {
+    return;
+  }
+
+  // Network-first for all other assets
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // Cache successful responses
-        if (response && response.status === 200) {
+        if (response && response.status === 200 && response.type === 'basic') {
           const responseClone = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
         }
@@ -48,3 +53,4 @@ self.addEventListener('fetch', (event) => {
       .catch(() => caches.match(event.request))
   );
 });
+

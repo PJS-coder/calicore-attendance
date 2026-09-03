@@ -89,9 +89,9 @@ export function useLocationVerification(): LocationVerificationResult {
       try {
         const position = await new Promise<GeolocationPosition>((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject, {
-            enableHighAccuracy: false, // Faster lock without high-accuracy battery drain
-            timeout: 5000,             // 5s max timeout
-            maximumAge: 60000,         // Use cached position if < 60s old
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 10000,
           });
         });
 
@@ -111,27 +111,38 @@ export function useLocationVerification(): LocationVerificationResult {
         } else {
           setStatus('out_of_range');
           setMethod(null);
-          setLabel(`🔴 Outside office range (${Math.round(distance)}m away) — Clock-in disabled`);
+          const distLabel = distance >= 1000
+            ? `${(distance / 1000).toFixed(1)}km`
+            : `${Math.round(distance)}m`;
+          setLabel(`🔴 Outside office range (${distLabel} away)`);
         }
       } catch (err: unknown) {
-        if (err instanceof GeolocationPositionError && err.code === GeolocationPositionError.PERMISSION_DENIED) {
-          setGpsPermission('denied');
+        setCoords(null);
+        setDistanceMeters(null);
+        setMethod(null);
+        setStatus('error');
+
+        if (err instanceof GeolocationPositionError) {
+          if (err.code === GeolocationPositionError.PERMISSION_DENIED) {
+            setGpsPermission('denied');
+            setLabel('🔴 Location permission denied — Enable GPS in browser');
+          } else if (err.code === GeolocationPositionError.TIMEOUT) {
+            setLabel('⚠️ GPS request timed out — Click Refresh to retry');
+          } else {
+            setLabel('⚠️ GPS unavailable — Please check device location');
+          }
+        } else {
+          setLabel('⚠️ Unable to get location — Click Refresh to retry');
         }
-        // Fall back to office location coordinates so verification succeeds for testing
-        setCoords({ lat: officeCoords.lat, lng: officeCoords.lng });
-        setDistanceMeters(0);
-        setStatus('gps_ok');
-        setMethod('gps');
-        setLabel(`📍 GPS Verified (At Office)`);
       } finally {
         isVerifyingRef.current = false;
       }
     } else {
-      setCoords({ lat: officeCoords.lat, lng: officeCoords.lng });
-      setDistanceMeters(0);
-      setStatus('gps_ok');
-      setMethod('gps');
-      setLabel(`📍 GPS Verified (At Office)`);
+      setCoords(null);
+      setDistanceMeters(null);
+      setStatus('error');
+      setMethod(null);
+      setLabel('⚠️ Geolocation not supported by your browser');
       isVerifyingRef.current = false;
     }
   }, []);
